@@ -3,11 +3,11 @@ from pathlib import Path
 from itertools import product, combinations
 
 # Load CSV
-GSHEET_CSV = Path("geometry_problems.csv")
-geometry_problems = pl.read_csv(GSHEET_CSV)
+GSHEET_CSV = Path("gjgex_dataset.csv")
+jgex_dataset = pl.read_csv(GSHEET_CSV)
 
-if "" in geometry_problems.columns:
-    geometry_problems = geometry_problems.rename({"": "name"})
+if "" in jgex_dataset.columns:
+    jgex_dataset = jgex_dataset.rename({"": "name"})
 
 # --------------------------------------------------
 # Normalize polygon tokens -> "polygon"
@@ -33,7 +33,7 @@ def is_valid_combination(toks):
 # 1) Observed construction frequencies
 # --------------------------------------------------
 construction_freqs = (
-    geometry_problems
+    jgex_dataset
     .select("NL_construction_in_statement", "numerical_concept")
     .filter(pl.col("NL_construction_in_statement").is_not_null())
     .filter(pl.col("NL_construction_in_statement").str.strip_chars() != "")
